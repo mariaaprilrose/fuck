@@ -1,0 +1,76 @@
+{% include 'authactions/nav.html' %}
+{% include 'authactions/footer.html' %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        {% if user.is_authenticated %}
+        <script>window.location="{% url 'auth:home' %}";</script>
+        {% endif %}
+        <title>Sign up | TuneWhale.com</title>
+    </head>
+    <body>
+        <div class = "site_content">
+            <div id = "signup_form">
+                <form action="{% url 'auth:signup' %}" method="POST">
+                {% csrf_token %}
+                    <table>
+                        <tr>
+                            <td>
+                                <h3>Personal Info</h3>
+                                <input type = "text" name = "first_name" id = "first_name" class = "field" placeholder = "First Name" autofocus required maxlength = "15" /><br />
+                                <input type = "text" name = "last_name" id = "last_name" class = "field" placeholder = "Last Name" required maxlength = "15" /><br />
+                                <input type = "text" name = "username" id = "username" class = "field" placeholder = "Username" required /><br />
+                                <input type = "email" name = "email" id = "email" class = "field" placeholder = "Email" required /><br />
+                                <input type = "password" name = "password" id = "password" class = "field" placeholder = "Password" required onkeyup = "check_length(2)"/><br />
+                                <span>Password must be at least 7 characters long.</span><br />
+                                <input type = "password" name = "retype_password" id = "retype_password" class = "field" placeholder = "Retype Password" required onkeyup = "check_password(2)" />
+                                <input type = "text" name = "best_song_ever" id = "best_song_ever" class = "field" placeholder = "Best Song Ever" /><br />
+                                <select name = "country" id = "country" required /></select><br />
+                                <select name = "state" id = "state" required /></select><br />
+                                <script>populate_countries(2);</script>
+                                Bio: <br />
+                                <textarea name = "bio" id = "bio"></textarea><br />
+                            </td>
+                            <td>
+                                <h3>Music Interests</h3>
+                                <input type = "checkbox" name = "music_interests" value = "Singer" /> Singer <br />
+                                <input type = "checkbox" name = "music_interests" value = "Songwriter" /> Songwriter <br />
+                                <input type = "checkbox" name = "music_interests" value = "Producer" /> Producer <br />
+                                <input type = "checkbox" name = "music_interests" value = "Engineer" /> Engineer <br />
+                                <input type = "checkbox" name = "music_interests" value = "DJ" /> DJ <br />
+                                <input type = "checkbox" name = "music_interests" value = "Dancer" /> Dancer <br />
+                                <input type = "checkbox" name = "music_interests" value = "Event Organizer" /> Event Organizer <br />
+                                <input type = "checkbox" name = "music_interests" value = "Choreographer" /> Choreographer <br />
+                                <input type = "checkbox" name = "music_interests" value = "Composer" /> Composer <br />
+                                <input list = "other_music_interests" name = "other_music_interests" id = "other_music_interests" class = "field" placeholder = "Other Interests" />
+                                <datalist id = "other_music_interests"></datalist><br />
+                            </td>
+                            <td>
+                                <h3>Music Genres</h3>
+                                <input type = "checkbox" name = "music_genres" value = "African" /> African <br />
+                                <input type = "checkbox" name = "music_genres" value = "Alternative" /> Alternative <br />
+                                <input type = "checkbox" name = "music_genres" value = "Avant-Garde" /> Avant-Garde <br />
+                                <input type = "checkbox" name = "music_genres" value = "Blues" /> Blues <br />
+                                <input type = "checkbox" name = "music_genres" value = "Country" /> Country <br />
+                                <input type = "checkbox" name = "music_genres" value = "Electronic" /> Electronic <br />
+                                <input type = "checkbox" name = "music_genres" value = "Heavy Metal" /> Heavy Metal <br />
+                                <input type = "checkbox" name = "music_genres" value = "Hip Hop" /> Hip Hop <br />
+                                <input type = "checkbox" name = "music_genres" value = "Jazz" /> Jazz<br />
+                                <input type = "checkbox" name = "music_genres" value = "Latin" /> Latin <br />
+                                <input type = "checkbox" name = "music_genres" value = "Pop" /> Pop <br />
+                                <input type = "checkbox" name = "music_genres" value = "Punk Rock" /> Punk Rock <br />
+                                <input type = "checkbox" name = "music_genres" value = "Reggae" /> Reggae <br />
+                                <input type = "checkbox" name = "music_genres" value = "Rhythm and Blues" /> Rhythm and Blues <br />
+                                <input type = "checkbox" name = "music_genres" value = "Ska" /> Ska <br />
+                                <input list = "other_music_genres" name = "other_music_genres" id = "other_music_genres" class = "field" placeholder = "Other Genres" />
+                                <datalist id = "other_music_genres"></datalist><br />
+                            </td>
+                        </tr>
+                    </table>
+                    <input type = "submit" value = "Sign Up" id = "button" />
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

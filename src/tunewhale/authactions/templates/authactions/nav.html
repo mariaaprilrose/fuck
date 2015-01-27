@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel = "stylesheet" type = "text/css" href = "{{ STATIC_URL }}css/style.css">
+        <link rel="shortcut icon" href="{{ STATIC_URL }}img/icons/favicon.ico" />
+        <script src = "{{ STATIC_URL }}js/jquery-1.6.3.min.js"></script>
+        <script src = "{{ STATIC_URL }}js/script_nav.js"></script>
+        <script src = "{{ STATIC_URL }}js/countries.js"></script>
+    </head>
+    <body>
+        <header id = "navigation">
+            <nav>
+                <ul id = "site_nav">
+                    <li>
+                        <a href = "{% url 'auth:home' %}"><img src = "{{ STATIC_URL }}img/icons/site_icon.png" id = 'site_icon' /></a>
+                        <ul id = "logo_dropdown">
+                            <li><a href = "{% url 'auth:home' %}">Home</a></li>
+                            <li><a href = "#">About</a></li>
+                            <li><a href = "#">FAQ</a></li>
+                            <li><a href = "#" id = "contactus">Contact Us</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href = "{% url 'blog:index' %}">
+                            <div class = "nav_icon"><img src="{{ STATIC_URL }}img/icons/blog.png" /></div>
+                            Blog
+                        </a>
+                    </li>
+                    <li>
+                        <a href = "#">
+                            <div class = "nav_icon"><img src="{{ STATIC_URL }}img/icons/tournament.png" /></div>
+                            Tournament
+                        </a>
+                        <ul id = "tournament_dropdown">
+                            <li><a href = "#">Featured</a></li>
+                            <li><a href = "#">Popular</a></li>
+                            <li><a href = "#">Genres</a></li>
+                            <li><a href = "#">Join</a></li>
+                        </ul>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li>
+                        <a href = "#">
+                            <div class = "nav_icon"><img src="{{ STATIC_URL }}img/icons/upload.png" /></div>
+                            Upload
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+                {% if not user.is_authenticated %}
+                <ul id = "auth_nav">
+                    <li><img src = "{{ STATIC_URL }}img/icons/login.png" id = "auth_icon" /></li>
+                    <li><a href = "#" id = "login">Log In</a></li>
+                    <li><a href = "#" id = "signup">Sign Up</a></li>
+                </ul>
+                {% else %}
+                <ul id = "user_nav">
+                    <li>
+                        <a href = "#">
+                            <span class = "notifications">
+                                1
+                            </span>
+                            <div id = "viewing_icon"></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href = "#">
+                            <span class = "notifications">
+                                22
+                            </span>
+                            <div id = "comments_icon"></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href = "#">
+                            <span class = "notifications">
+                                100 {# add notifications models #}
+                            </span>
+                            <div id = "messages_icon"></div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href = "{% url 'profile:index' user.username %}"><img src = "{{ STATIC_URL }}{{ the_user.get_avatar_url }}" id = "user_icon" /></a>
+                        <ul>
+                            <li>
+                                <a href = "{% url 'profile:index' user.username %}">
+                                    <div id = "dropdown_profile_icon"></div>&nbsp;
+                                    Profile
+                                </a>
+                            </li>
+                            <li>
+                                <a href = "#">
+                                    <div id = "dropdown_viewing_icon"></div>&nbsp;
+                                    Viewing
+                                </a>
+                            </li>
+                            <li>
+                                <a href = "#">
+                                    <div id = "dropdown_accounting_icon"></div>&nbsp;
+                                    Accounting
+                                </a>
+                            </li>
+                            <li>
+                                <a href = "#">
+                                    <div id = "dropdown_videos_icon"></div>&nbsp;
+                                    Videos
+                                </a>
+                            </li>
+                            <li>
+                                <a href = "#">
+                                    <div id = "dropdown_settings_icon"></div>&nbsp;
+                                    Settings
+                                </a>
+                            </li>
+                            <li>
+                                <a href = "{% url 'auth:logout' %}?next={{ request.path }}">
+                                    <div id = "dropdown_logout_icon"></div>&nbsp;
+                                    Log Out
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <form>
+                            <div id = "search_box">
+                                <input type = "image" src = "{{ STATIC_URL }}img/icons/search.png" id = "search_icon" value = "search" />
+                                <input type = "search" name = "search" id = "search" class = "search" autocomplete />
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+                {% endif %}
+            </nav>
+        </header>
+
+        {% if success_message %}
+        <div id = "messages">
+            <p>{{ success_message }}</p>
+        </div>
+        {% elif error_message %}
+        <div id = "messages">
+            <p><strong>{{ error_message }}</strong></p>
+        </div>
+        {% endif %}
+        
+        <div id = "mask"></div>
+        {% if not user.is_authenticated %}
+        <!-- Note: if login is not authenticated, user should remain on login box -->
+        <div id = "login_box">
+            <a href = "#"><img src = "{{ STATIC_URL }}img/icons/close.png" /></a>
+            <form action = "{% url 'auth:login' %}?next={{ request.path }}" method = "POST">
+            {% csrf_token %}
+                <h2>Please Login:</h2>
+                <input type = "text" name = "username" id = "username" class = "field" placeholder = "Username" required autofocus /><br />
+                <input type = "password" name = "password" id = "password" class = "field" placeholder = "Password" required /><br />
+                <input type = "checkbox" name = "keep_logged_in" id = "keep_logged_in" /> Keep me signed in
+                <br />
+                <input type = "submit" value = "Login" id = "button" />
+            </form>
+            <span>Don't have an account yet? <a href = "#" id = "signup">Sign up</a> now!</span>
+        </div>
+        <div id = "signup_box">
+            <a href = "#"><img src = "{{ STATIC_URL }}img/icons/close.png" /></a>
+            <div id = "content">
+                <div id = "title">Sign Up</div>
+                <div id = "tagline">It's free and always will be.</div>
+                <hr />
+                <div id = "facebook_signup"><img src = "{{ STATIC_URL }}img/icons/facebook_signup.png" /></div>
+                {# facebook friends for people logged into facebook already #}
+            </div>
+            <form action="{% url 'auth:signup' %}" method="POST">
+            {% csrf_token %}
+                <table>
+                    <tr>
+                        <td>
+                            <h3>Personal Info</h3>
+                            <input type = "text" name = "first_name" id = "first_name" class = "field" placeholder = "First Name" required autofocus maxlength = "15" /><br />
+                            <input type = "text" name = "last_name" id = "last_name" class = "field" placeholder = "Last Name" required maxlength = "15" /><br />
+                            <input type = "text" name = "username" id = "username" class = "field" placeholder = "Username" required /><br />
+                            <input type = "email" name = "email" id = "email" class = "field" placeholder = "Email" required /><br />
+                            <input type = "password" name = "password" id = "password" class = "field" placeholder = "Password" required onkeyup = "check_length(1)"/><br />
+                            <span>Password must be at least 7 characters long.</span><br />
+                            <input type = "password" name = "retype_password" id = "retype_password" class = "field" placeholder = "Retype Password" required onkeyup = "check_password(1)" />
+                            <input type = "text" name = "best_song_ever" id = "best_song_ever" class = "field" placeholder = "Best Song Ever" /><br />
+                            <select name = "country" id = "country" required /></select><br />
+                            <select name = "state" id = "state" required /></select><br />
+                            <script>populate_countries(1);</script>
+                            Bio: <br />
+                            <textarea name = "bio" id = "bio"></textarea><br />
+                        </td>
+                        <td>
+                            <h3>Music Interests</h3>
+                            <input type = "checkbox" name = "music_interests" value = "Singer" /> Singer <br />
+                            <input type = "checkbox" name = "music_interests" value = "Songwriter" /> Songwriter <br />
+                            <input type = "checkbox" name = "music_interests" value = "Producer" /> Producer <br />
+                            <input type = "checkbox" name = "music_interests" value = "Engineer" /> Engineer <br />
+                            <input type = "checkbox" name = "music_interests" value = "DJ" /> DJ <br />
+                            <input type = "checkbox" name = "music_interests" value = "Dancer" /> Dancer <br />
+                            <input type = "checkbox" name = "music_interests" value = "Event Organizer" /> Event Organizer <br />
+                            <input type = "checkbox" name = "music_interests" value = "Choreographer" /> Choreographer <br />
+                            <input type = "checkbox" name = "music_interests" value = "Composer" /> Composer <br />
+                            <input list = "other_music_interests" name = "other_music_interests" id = "other_music_interests" class = "field" placeholder = "Other Interests" />
+                            <datalist id = "other_music_interests"></datalist><br />
+                        </td>
+                        <td>
+                            <h3>Music Genres</h3>
+                            <input type = "checkbox" name = "music_genres" value = "African" /> African <br />
+                            <input type = "checkbox" name = "music_genres" value = "Alternative" /> Alternative <br />
+                            <input type = "checkbox" name = "music_genres" value = "Avant-Garde" /> Avant-Garde <br />
+                            <input type = "checkbox" name = "music_genres" value = "Blues" /> Blues <br />
+                            <input type = "checkbox" name = "music_genres" value = "Country" /> Country <br />
+                            <input type = "checkbox" name = "music_genres" value = "Electronic" /> Electronic <br />
+                            <input type = "checkbox" name = "music_genres" value = "Heavy Metal" /> Heavy Metal <br />
+                            <input type = "checkbox" name = "music_genres" value = "Hip Hop" /> Hip Hop <br />
+                            <input type = "checkbox" name = "music_genres" value = "Jazz" /> Jazz<br />
+                            <input type = "checkbox" name = "music_genres" value = "Latin" /> Latin <br />
+                            <input type = "checkbox" name = "music_genres" value = "Pop" /> Pop <br />
+                            <input type = "checkbox" name = "music_genres" value = "Punk Rock" /> Punk Rock <br />
+                            <input type = "checkbox" name = "music_genres" value = "Reggae" /> Reggae <br />
+                            <input type = "checkbox" name = "music_genres" value = "Rhythm and Blues" /> Rhythm and Blues <br />
+                            <input type = "checkbox" name = "music_genres" value = "Ska" /> Ska <br />
+                            <input list = "other_music_genres" name = "other_music_genres" id = "other_music_genres" class = "field" placeholder = "Other Genres" />
+                            <datalist id = "other_music_genres"></datalist><br />
+                        </td>
+                    </tr>
+                </table>
+                <input type = "submit" value = "Sign Up" id = "button" />
+            </form>
+        </div>
+        {% endif %}
+        <div id = "contactus_box">
+            <a href = "#"><img src = "{{ STATIC_URL }}img/icons/close.png" /></a>
+            <h2>Contact Us</h2>
+            <span>Tell us what you think of this site, or just say hello!</span>
+            <form action = "{% url 'auth:contact' %}?next={{ request.path }}" method = "POST">
+            {% csrf_token %}
+                <label for = "id_name">Name: </label>
+                {% if user.is_authenticated %}
+                <input type = "text" id = "id_name" name = "name" class = "field" maxlength="100" value = "{{ the_user.user.get_full_name }}" required /><br />
+                {% else %}
+                <input type = "text" id = "id_name" name = "name" class = "field" maxlength="100" required /><br />
+                {% endif %}
+                <label for = "id_phone">Contact Number: </label>
+                <input type = "tel" id = "id_phone" name = "phone" class = "field" /><br />
+                <label for = "id_email">Email: </label>
+                {% if user.is_authenticated %}
+                <input type = "email" class = "field" id = "id_email" name = "email" maxlength = "100" value = "{{ the_user.user.email }}" required /><br />
+                {% else %}
+                <input type = "email" id = "id_email" name = "email" class = "field" maxlength = "100" required /><br />
+                {% endif %}
+                <label for = "id_message">Message: </label>
+                <textarea id = "id_message" name = "message" required></textarea><br />
+                <input type = "checkbox" id = "subscribe_to_posts" name = "subscribe_to_posts" /> Subscribe to TuneWhale's latest posts <br />
+                <input type = "submit" value = "Send" id = "button" />
+            </form>
+        </div>
+    </body>
+</html>

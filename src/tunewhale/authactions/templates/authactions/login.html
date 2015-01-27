@@ -1,0 +1,25 @@
+{% include 'authactions/nav.html' %}
+{% include 'authactions/footer.html' %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Log in | TuneWhale.com</title>
+    </head>
+    <body>
+        <div class = "site_content">
+            <div id = "login_form">
+                <form action = "{% url 'auth:login' %}?{{ request.META.HTTP_REFERER }}" method = "POST">
+                {% csrf_token %}
+                    <h2>Please Login:</h2>
+                    <input type = "text" name = "username" id = "username" class = "field" placeholder = "Username" required autofocus /><br />
+                    <input type = "password" name = "password" id = "password" class = "field" placeholder = "Password" required /><br />
+                    <input type = "checkbox" name = "keep_logged_in" id = "keep_logged_in" /> Keep me signed in
+                    <br />
+                    <input type = "submit" value = "Login" id = "button" />
+                </form>
+                <span>Don't have an account yet? <a href = "#">Sign up</a> now!</span>
+            </div>
+        </div>
+    </body>
+</html>

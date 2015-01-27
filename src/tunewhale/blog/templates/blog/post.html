@@ -1,0 +1,94 @@
+{% include 'authactions/nav.html' %}
+{% include 'authactions/footer.html' %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src = "{{ STATIC_URL }}js/script_blog.js"></script>
+        <title> {{ post.title }} | TuneWhale.com</title>
+    </head>
+    <body class = "blog">
+        <div class = "site_content">
+            <div id = "blog">
+                <aside>
+                    <div id = "search_bar">
+                        <input type = "search" name = "search" id = "search" class = "search" autocomplete placeholder = "Search" />
+                        <input type = "image" src = "{{ STATIC_URL }}img/icons/p_search.png" id = "search_icon" value = "search" />
+                    </div>
+                    <div id = "social_icons">
+                        <a href = ""><div id = "twitter"></div></a>
+                        <a href = ""><div id = "youtube"></div></a>
+                        <a href = ""><div id = "facebook"></div></a>
+                        <a href = ""><div id = "rss"></div></a>
+                    </div>
+                    <div id = "recent_posts">
+                        <h2>Recent Posts</h2>
+                        <ul>
+                        {% for post in recent_posts %}
+                            <li><a href = "{% url 'blog:post' post.convert_title %}">>> {{ post }}</a></li>
+                        {% endfor %}    
+                        </ul>
+                    </div>
+
+                    <div id = "popular_posts">
+                        <h2>Popular Posts</h2>
+                        <ul>
+                            <li><a href = "">>> #</a></li>
+                        </ul>
+                    </div>
+
+                    <div id = "archive">
+                        <h2>Archive</h2>
+                        <select>
+                            <option selected disabled>Select by month</option>
+                            <optgroup label = "2014">
+                                <option>May</option>
+                                <option>June</option>
+                            </optgroup>
+                            <optgroup label = "2013">
+                                <option>June</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </aside>
+
+
+                <h3>
+                    <a href ="{% url 'blog:index' %}">&#8592; back to Captain's Log</a>
+                </h3>
+
+                <div id = "blog_post">
+                    <h1>{{ post.title }}</h1>
+                    <div id = "icons_and_time">
+                        <time>{{ post.date_published }}</time>
+                        <div id = "share"></div>
+                        <div id = "comments"></div> {{ post.comments }}
+                        <div id = "likes"></div> {{ post.likes }}
+                    </div>
+                    {% if post.picture %}
+                    <img src = "{{ STATIC_URL }}{{ post.get_picture_url }}" />
+                    {% endif %}
+                    <article>{{ post.content }}</article>
+                </div>
+
+                <div id = "comment_section">
+                    {% if not user.is_authenticated %}
+                    <h2><a href = "#" id = "login">Log in</a> to join the discussion</h2>
+                    {% else %}
+                    <h2>Join the discussion</h2>
+                    <form>
+                        <input type = "text" id = "name" name = "name" class = "field" placeholder = "Name (required)" value = "{{ the_user.user.get_full_name }}" required /> <br />
+                        <input type = "email" id = "email" name = "email" class = "field" placeholder = "Email (optional)" value = "{{ the_user.user.email }}" required /> <br />
+                        <textarea placeholder = "Add a comment."></textarea> <br />
+                        <input type = "submit" id = "button" />
+                    </form>
+                    {% endif %}
+
+                    <div id = "people_commenting">
+                        <p>insert commenting thingy here</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

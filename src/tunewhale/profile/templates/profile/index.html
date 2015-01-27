@@ -1,0 +1,288 @@
+{% include 'authactions/nav.html' %}
+{% include 'authactions/footer.html' %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src = "{{ STATIC_URL }}js/script_profile.js"></script>
+        <title>{{ some_user.user.username }}'s Profile | TuneWhale.com</title>
+    </head>
+    <body class = "profile">
+        <div class = "site_content">
+            <div id = "profile">
+                <div id = "cover">
+                    <img src="{{ STATIC_URL }}{{ some_user.get_cover_url }}" />
+                    {% if some_user.user == user %}
+                    <a href = "#">edit</a>
+                    {% endif %}
+                </div>
+                <div id = "avatar">
+                    <img src="{{ STATIC_URL }}{{ some_user.get_avatar_url }}" />
+                    {% if some_user.user == user %}
+                    <a href = "#">edit</a>
+                    {% endif %}
+                </div>
+                <header>
+                    <div id = "name_date_location">
+                        <div id = "fullname">
+                            {{ some_user.user.get_full_name }}
+                        </div>
+                        <div id = "date_registered">
+                            Registered: {{ month }} {{ year }}
+                        </div>
+                        <div id = "location">
+                            {{ some_user.location }}
+                        </div>
+                    </div>
+                    <div id = "status">
+                        <img src="{{ STATIC_URL }}{{ some_user.get_status_url }}" /><br />
+                        {{ su_status }}
+                    </div>
+                    <div id = "abilities_and_merchandise">
+                        <div id = "abilities">
+                            <div id = "open_bracket"></div>
+                            <span>
+                                <div id = "share"></div>
+                                <div id = "comment"></div>
+                                <div id = "votes"></div>
+                                <div id = "likes"></div>
+                                <div id = "follow"></div>
+                                <div id = "unlocked"></div>
+                                <div id = "watch"></div>
+                                {% if su_status == 'Tune Whale' or su_status == 'Killer Whale' %}
+                                <div id = "message"></div>
+                                {% if su_status == 'Killer Whale' %}
+                                <div id = "tournaments"></div>
+                                {% endif %}
+                                {% endif %}
+                                <h2>Abilities</h2>
+                            </span>
+                            <div id = "close_bracket"></div>
+                        </div>
+                        <div id = "merchandise"></div>
+                    </div>
+                </header>
+                <main>
+                    <aside>
+                        {% if some_user.user != user %}
+                        <div id = "buttons">
+                        {% if user.is_authenticated %}
+                            {% if is_following %}
+                            <a href = "{% url 'profile:unfollow' some_user.user.username %}?next={{ request.path }}"><button id = "following">Following Whale</button></a><br />
+                            {% else %}
+                            <a href = "{% url 'profile:follow' some_user.user.username %}?next={{ request.path }}"><button>Follow Whale</button></a><br />
+                            {% endif %}
+                            <button>Message Whale</button><br />
+                        {% else %}
+                            <button onclick = "open_login_box()">Follow Whale</button><br /> <!-- will open log in box (log in before you can follow) -->
+                            <button onclick = "open_login_box()">Message Whale</button><br /> <!-- will open log in box (log in before you can message) -->
+                        {% endif %}
+                        </div>
+                        {% endif %}
+                        <span id = "title">About </span><hr />
+                        <span class = "field_title">Name</span><div class = "user_fields">{{ some_user.user.get_full_name }}</div>
+                        <span class = "field_title">Username</span><div class = "user_fields">{{ some_user.user.username }}</div>
+                        <span class = "field_title">Email</span><div class = "user_fields">{{ some_user.user.email }}</div>
+                        {% if some_user.music_interests %}
+                        <span class = "field_title">Music Interests</span><div class = "profile_fields">{{ some_user.music_interests }}</div>
+                        {% endif %}
+                        {% if some_user.music_genres %}
+                        <span class = "field_title">Music Genres</span><div class = "profile_fields">{{ some_user.music_genres }}</div>
+                        {% endif %}
+                        {% if some_user.best_song_ever %}
+                        <span class = "field_title">Best Song Ever</span><div class = "profile_fields">{{ some_user.best_song_ever }}</div>
+                        {% endif %}
+                    </aside>
+                    <section>
+                        {% if some_user == the_user %}
+
+                        {% if su_status == 'Baby Whale' %}
+                        <div id = "white_mask">
+                            <a href = ""><p>Upload to upgrade</p></a>
+                        </div>
+                        {% endif %}
+
+                        <div id = "tournament_feed">
+                            <h3>Tournament Feed</h3>
+                            <div class = "entries">
+                                <div class = "entry">
+                                    <a href = "#">
+                                        <img src = "{{ STATIC_URL }}img/others/3.png" />
+                                        <span>
+                                            Your video, <mark>INSERT RANDOM VIDEO TITLE HERE</mark>, in the <mark>INSERT RANDOM TOURNAMENT TITLE HERE Tournament</mark> has won! Yay you! :)
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class = "entry">
+                                    <a href = "#">
+                                        <img src = "{{ STATIC_URL }}img/others/3.png" />
+                                        <span>
+                                            Your video, <mark>INSERT RANDOM VIDEO TITLE HERE</mark>, in the <mark>INSERT RANDOM TOURNAMENT TITLE HERE Tournament</mark> has won! Yay you! :)
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class = "entry">
+                                    <a href = "#">
+                                        <img src = "{{ STATIC_URL }}img/others/3.png" />
+                                        <span>
+                                            Your video, <mark>INSERT RANDOM VIDEO TITLE HERE</mark>, in the <mark>INSERT RANDOM TOURNAMENT TITLE HERE Tournament</mark> has won! Yay you! :)
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class = "entry">
+                                    <a href = "#">
+                                        <img src = "{{ STATIC_URL }}img/others/3.png" />
+                                        <span>
+                                            Your video, <mark>INSERT RANDOM VIDEO TITLE HERE</mark>, in the <mark>INSERT RANDOM TOURNAMENT TITLE HERE Tournament</mark> has won! Yay you! :)
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class = "entry">
+                                    <a href = "#">
+                                        <img src = "{{ STATIC_URL }}img/others/3.png" />
+                                        <span>
+                                            Your video, <mark>INSERT RANDOM VIDEO TITLE HERE</mark>, in the <mark>INSERT RANDOM TOURNAMENT TITLE HERE Tournament</mark> has won! Yay you! :)
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class = "entry">
+                                    <a href = "#">
+                                        <img src = "{{ STATIC_URL }}img/others/3.png" />
+                                        <span>
+                                            Your video, <mark>INSERT RANDOM VIDEO TITLE HERE</mark>, in the <mark>INSERT RANDOM TOURNAMENT TITLE HERE Tournament</mark> has won! Yay you! :)
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id = "blow_hole">
+                            <h3>Blow Hole</h3>
+                            <div class = "entries">
+                                <div class = "entry">
+                                    <a href = "#">
+                                        <img src = "{{ STATIC_URL }}img/others/1.png" />
+                                        <span>
+                                            200 people have shared <mark>INSERT RANDOM BLOG TITLE HERE</mark>.
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class = "entry">
+                                    <a href = "#">
+                                        <img src = "{{ STATIC_URL }}img/others/2.png" />
+                                        <span>
+                                            <mark>INSERT RANDOM PERSON'S NAME HERE</mark> has commented on <mark>INSERT ANOTHER RANDOM PERSON'S NAME HERE's video</mark> 30 seconds ago.
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class = "entry">
+                                    <a href = "#">
+                                        <img src = "{{ STATIC_URL }}img/others/1.png" />
+                                        <span>
+                                            200 people have shared <mark>INSERT RANDOM BLOG TITLE HERE</mark>.
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class = "entry">
+                                    <a href = "#">
+                                        <img src = "{{ STATIC_URL }}img/others/2.png" />
+                                        <span>
+                                            <mark>INSERT RANDOM PERSON'S NAME HERE</mark> has commented on <mark>INSERT ANOTHER RANDOM PERSON'S NAME HERE's video</mark> 30 seconds ago.
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class = "entry">
+                                    <a href = "#">
+                                        <img src = "{{ STATIC_URL }}img/others/1.png" />
+                                        <span>
+                                            200 people have shared <mark>INSERT RANDOM BLOG TITLE HERE</mark>.
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class = "entry">
+                                    <a href = "#">
+                                        <img src = "{{ STATIC_URL }}img/others/2.png" />
+                                        <span>
+                                            <mark>INSERT RANDOM PERSON'S NAME HERE</mark> has commented on <mark>INSERT ANOTHER RANDOM PERSON'S NAME HERE's video</mark> 30 seconds ago.
+                                        </span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div id = "bio">
+                            {% if some_user.bio %}
+                            <h3>Bio</h3>
+                            <div>{{ some_user.bio }}</div>
+                            {% endif %}
+                        </div>
+                        <div id = "followers">
+                            {% if su_followers %}
+                            <div id = "search_bar_and_followers_count">
+                                <div id = "search_bar">
+                                    <input type = "search" name = "search" id = "search" class = "search" autocomplete placeholder = "Search" />
+                                    <input type = "image" src = "{{ STATIC_URL }}img/icons/p_search.png" id = "search_icon" value = "search" />
+                                </div>
+                                <div id = "followers_count">
+                                    <img src = "{{ STATIC_URL }}img/icons/followers.png" id = "followers_icon" />
+                                    <span>{{ some_user.followers_count }}</span>
+                                </div>
+                            </div>
+
+                            <h3>Followers:</h3>
+                            <div id = "users">
+                                {% for u in su_followers %}
+                                <div id = "user">
+                                    <a href = "{% url 'profile:index' u.user.username %}">
+                                        <span id = "name">{{ u.user.get_full_name }}</span>
+                                        <img src = "{{ STATIC_URL }}{{ u.get_avatar_url }}" id = "avatar">
+                                        <!-- {% if is_following %} {# right now is_following refers to some_user and not some_user's followers, find a way to pass a parameter #}
+                                        <button id = "following">Following</button><br />
+                                        {% else %}
+                                        <button>Follow Whale</button><br />
+                                        {% endif %} -->
+                                        <!--<div id = "followers_icon"></div>-->
+                                        <img src = "{{ STATIC_URL }}img/icons/followers.png" id = "followers_icon" />
+                                        <div id = "followers_count">{{ u.followers_count }}</div>
+                                    </a>
+                                </div>
+                                {% endfor %}
+                            </div>
+
+                            <div id = "back_and_next">
+                                <div id = "back"></div>
+                                <div id = "next"></div>
+                            </div>
+
+                            {% endif %}
+                        </div>
+                    </section>
+                </main>
+            </div>
+        </div>
+        {% if user.is_authenticated %}
+        <div id = "avatar_upload_form">
+            <a href = "#"><img src = "{{ STATIC_URL }}img/icons/close.png" /></a>
+            <h2>Edit Profile</h2>
+            Set your profile picture:<br />
+            <img src = "{{ STATIC_URL }}{{ some_user.get_avatar_url }}" id = "avatar_img" />
+            <form action = "." method = "POST" enctype = "multipart/form-data">
+            {% csrf_token %}
+                <span>{{ form.avatar }}</span><br />
+                <input type = "submit" value = "Save" id = "button" />
+            </form>
+        </div>
+
+        <div id = "cover_upload_form">
+            <a href = "#"><img src = "{{ STATIC_URL }}img/icons/close.png" /></a>
+            <h2>Edit Profile</h2>
+            Set your cover photo:<br />
+            <img src = "{{ STATIC_URL }}{{ some_user.get_cover_url }}" id = "cover_img" />
+            <form action = "." method = "POST" enctype = "multipart/form-data">
+            {% csrf_token %}
+                <span>{{ form.cover }}</span><br />
+                <input type = "submit" value = "Save" id = "button" />
+            </form>
+        </div>
+        {% endif %}
+    </body>
+</html>

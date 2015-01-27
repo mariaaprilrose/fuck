@@ -1,0 +1,194 @@
+{% include 'authactions/nav.html' %}
+{% include 'authactions/footer.html' %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src = "{{ STATIC_URL }}js/jquery.spritely-0.6.js"></script>
+        <script src = "{{ STATIC_URL }}js/script_home.js"></script>
+        {% if user.is_authenticated %}
+        <title>Home | Tunewhale.com</title>
+        {% else %}
+        <title>TuneWhale.com</title>
+        {% endif %}
+    </head>
+    <body class = "home">
+        <div id = "home_background">
+            <div id = "top">
+                <div id = "plane"></div>
+                <div id = "far_clouds"></div>
+                <div id = "near_clouds"></div>
+            </div>
+            <div id = "bottom">
+                <div id = "upper_wave"></div>
+                <div id = "whale"></div>
+                <div id = "middle_wave"></div>
+                <div id = "ship"></div>
+                <div id = "bottom_wave"></div>
+            </div>
+        </div>
+        <div class = "site_content">
+            <div id = "home_video_playlist">
+                <div id = "main_video">
+                    <video id = "video" width = "768" height = "576" controls poster = "{{ STATIC_URL }}videos/video_poster.jpg">
+                        <source src = "http://video-js.zencoder.com/oceans-clip.webm" type = "video/webm" />
+                    </video>
+                    <span><div class = "video_title">Video Title</div></span>
+                </div>
+                <div id = "other_videos">
+                    <span id = "back"></span>
+                    <ul>
+                        <li>
+                            <img src = "{{ STATIC_URL }}videos/other_poster1.jpg" class = "other_posters" alt = "http://video-js.zencoder.com/oceans-clip.webm" />
+                            <span>
+                                <div class = "video_title">Video Title</div>
+                            </span>
+                        </li>
+                        <li>
+                            <img src = "{{ STATIC_URL }}videos/other_poster2.jpg" class = "other_posters" alt = "http://www.w3schools.com/html/mov_bbb.ogg" />
+                            <span>
+                                <div class = "video_title">Video Title</div>
+                            </span>
+                        </li>
+                        <li>
+                            <img src = "{{ STATIC_URL }}videos/other_poster1.jpg" class = "other_posters" alt = "http://video-js.zencoder.com/oceans-clip.webm" />
+                            <span>
+                                <div class = "video_title">Video Title</div>
+                            </span>
+                        </li>
+                        <li>
+                            <img src = "{{ STATIC_URL }}videos/other_poster2.jpg" class = "other_posters" alt = "http://www.w3schools.com/html/mov_bbb.ogg" />
+                            <span>
+                                <div class = "video_title">Video Title</div>
+                            </span>
+                        </li>
+                        <li>
+                            <img src = "{{ STATIC_URL }}videos/other_poster1.jpg" class = "other_posters" alt = "http://video-js.zencoder.com/oceans-clip.webm" />
+                            <span>
+                                <div class = "video_title">Video Title</div>
+                            </span>
+                        </li>
+                        <li>
+                            <img src = "{{ STATIC_URL }}videos/other_poster2.jpg" class = "other_posters" alt = "http://www.w3schools.com/html/mov_bbb.ogg" />
+                            <span>
+                                <div class = "video_title">Video Title</div>
+                            </span>
+                        </li>
+                        <li>
+                            <img src = "{{ STATIC_URL }}videos/other_poster1.jpg" class = "other_posters" alt = "http://video-js.zencoder.com/oceans-clip.webm" />
+                            <span>
+                                <div class = "video_title">Video Title</div>
+                            </span>
+                        </li>
+                        <li>
+                            <img src = "{{ STATIC_URL }}videos/other_poster2.jpg" class = "other_posters" alt = "http://www.w3schools.com/html/mov_bbb.ogg" />
+                            <span>
+                                <div class = "video_title">Video Title</div>
+                            </span>
+                        </li> 
+                    </ul>
+                    <span id = "next"></span>
+                </div>
+            </div>
+            <div id = "home_featured_videos">
+                <header>
+                    <h2>Featured Tournament Videos</h2>
+                    <ul>
+                        <li>
+                            <div id = "sort"></div>
+                            <ul>
+                                <li><a href = "#">Most Popular</a></li>
+                                <li><a href = "#">Recommended</a></li>
+                                <li><a href = "#">Best Match</a></li>
+                                <li><a href = "#">Underdogs</a></li>
+                                <li><a href = "#">Top Seeds</a></li>
+                                <li><a href = "#">Open Seeding</a></li>
+                                <li><a href = "#">Ending soonest</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <span>Sort</span>
+                </header>
+
+                <table>
+                    <tr>
+                        <td>
+                            <div>
+                                <a href = "#"><img src = "{{ STATIC_URL }}videos/other_poster1.jpg" class = "posters" /></a>
+                                <span class = "video_details">
+                                    <div class = "video_title">Video Title</div>
+                                    <div class = "uploader">Random Dude</div>
+                                </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <a href = "#"><img src = "{{ STATIC_URL }}videos/other_poster2.jpg" class = "posters" /></a>
+                                <span class = "video_details">
+                                    <div class = "video_title">Video Title</div>
+                                    <div class = "uploader">Random Dude</div>
+                                </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <a href = "#"><img src = "{{ STATIC_URL }}videos/other_poster1.jpg" class = "posters" /></a>
+                                <span class = "video_details">
+                                    <div class = "video_title">Video Title</div>
+                                    <div class = "uploader">Random Dude</div>
+                                </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <a href = "#"><img src = "{{ STATIC_URL }}videos/other_poster2.jpg" class = "posters" /></a>
+                                <span class = "video_details">
+                                    <div class = "video_title">Video Title</div>
+                                    <div class = "uploader">Random Dude</div>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div>
+                                <a href = "#"><img src = "{{ STATIC_URL }}videos/other_poster1.jpg" class = "posters" /></a>
+                                <span class = "video_details">
+                                    <div class = "video_title">Video Title</div>
+                                    <div class = "uploader">Random Dude</div>
+                                </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <a href = "#"><img src = "{{ STATIC_URL }}videos/other_poster2.jpg" class = "posters" /></a>
+                                <span class = "video_details">
+                                    <div class = "video_title">Video Title</div>
+                                    <div class = "uploader">Random Dude</div>
+                                </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <a href = "#"><img src = "{{ STATIC_URL }}videos/other_poster1.jpg" class = "posters" /></a>
+                                <span class = "video_details">
+                                    <div class = "video_title">Video Title</div>
+                                    <div class = "uploader">Random Dude</div>
+                                </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <a href = "#"><img src = "{{ STATIC_URL }}videos/other_poster2.jpg" class = "posters" /></a>
+                                <span class = "video_details">
+                                    <div class = "video_title">Video Title</div>
+                                    <div class = "uploader">Random Dude</div>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

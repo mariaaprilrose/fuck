@@ -1,0 +1,12 @@
+{% extends "admin/base.html" %}
+{% load i18n %}
+
+{% block extrastyle %}{{ block.super }}<link rel="shortcut icon" href="{{ STATIC_URL }}img/icons/favicon.ico" />{% endblock %}
+
+{% block title %}{{ title }} | {% trans 'TuneWhale.com' %}{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">{% trans 'TuneWhale administration' %}</h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

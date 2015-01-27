@@ -1,0 +1,142 @@
+{% include 'authactions/nav.html' %}
+{% include 'authactions/footer.html' %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Blog | TuneWhale.com</title>
+    </head>
+    <body class = "blog">
+        <div class = "site_content">
+            <div id = "blog">
+            {% if blog_posts %}
+                <aside>
+                    <div id = "search_bar">
+                        <input type = "search" name = "search" id = "search" class = "search" autocomplete placeholder = "Search" />
+                        <input type = "image" src = "{{ STATIC_URL }}img/icons/p_search.png" id = "search_icon" value = "search" />
+                    </div>
+                    <div id = "social_icons">
+                        <a href = ""><div id = "twitter"></div></a>
+                        <a href = ""><div id = "youtube"></div></a>
+                        <a href = ""><div id = "facebook"></div></a>
+                        <a href = ""><div id = "rss"></div></a>
+                    </div>
+                    <div id = "recent_posts">
+                        <h2>Recent Posts</h2>
+                        <ul>
+                        {% for post in recent_posts %}
+                            <li><a href = "{% url 'blog:post' post.convert_title %}">>> {{ post }}</a></li>
+                        {% endfor %}    
+                        </ul>
+                    </div>
+
+                    <div id = "popular_posts">
+                        <h2>Popular Posts</h2>
+                        <ul>
+                            <li><a href = "">>> #</a></li>
+                        </ul>
+                    </div>
+
+                    <div id = "archive">
+                        <h2>Archive</h2>
+                        <select>
+                            <option selected disabled>Select by month</option>
+                            <optgroup label = "2014">
+                                <option>May</option>
+                                <option>June</option>
+                            </optgroup>
+                            <optgroup label = "2013">
+                                <option>June</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </aside>
+
+                <h1>Captain's Log</h1>
+                {% if user.is_staff %}
+                <div id = "create_new">
+                    <a href = "{% url 'blog:new' %}">Create new post</a>
+                </div>
+                {% endif %}
+                
+                <div id = "blog_posts">
+                    {% if main_post.picture %}
+                    <div id = "main_post_with_pic">
+                        <a href = "{% url 'blog:post' main_post.convert_title %}"><img src = "{{ STATIC_URL }}{{ main_post.get_picture_url }}"></a> <br />
+                        <div id = "details">
+                            <header>
+                                <a href = "{% url 'blog:post' main_post.convert_title %}">{{ main_post.title }}</a>
+                            </header> <br />
+                            <time>{{ main_post.date_published }}</time> <br />
+                            <summary>{{ main_post.content }}</summary> <br />
+                            <div id = "icons_and_read_more">
+                                <div id = "share"></div>
+                                <div id = "comments"></div> {{ main_post.comments }}
+                                <div id = "likes"></div> {{ main_post.likes }}
+                                <a href = "{% url 'blog:post' main_post.convert_title %}"><button id = "read_more">read more</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div id = "main_post">
+                        <div id = "details">
+                            <header>
+                                <a href = "{% url 'blog:post' main_post.convert_title %}">{{ main_post.title }}</a>
+                            </header> <br />
+                            <time>{{ main_post.date_published }}</time> <br />
+                            <summary>{{ main_post.content }}</summary> <br />
+                            <div id = "icons_and_read_more">
+                                <div id = "share"></div>
+                                <div id = "comments"></div> {{ main_post.comments }}
+                                <div id = "likes"></div> {{ main_post.likes }}
+                                <a href = "{% url 'blog:post' main_post.convert_title %}"><button id = "read_more">read more</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                {% for post in blog_posts %}
+                    {% if post.picture %}
+                    <div id = "post_with_picture">
+                        <a href = "{% url 'blog:post' post.convert_title %}"><img src = "{{ STATIC_URL }}{{ post.get_picture_url }}"></a> <br />
+                        <div id = "details">
+                            <header>
+                                <a href = "{% url 'blog:post' post.convert_title %}">{{ post.title }}</a>
+                            </header> <br />
+                            <time>{{ post.date_published }}</time> <br />
+                            <summary>{{ post.content }}</summary> <br />
+                            <div id = "icons_and_read_more">
+                                <div id = "share"></div>
+                                <div id = "comments"></div> {{ post.comments }}
+                                <div id = "likes"></div> {{ post.likes }}
+                                <a href = "{% url 'blog:post' post.convert_title %}"><button id = "read_more">read more</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div id = "post">
+                        <div id = "details">
+                            <header>
+                                <a href = "{% url 'blog:post' post.convert_title %}">{{ post.title }}</a>
+                            </header> <br />
+                            <time>{{ post.date_published }}</time> <br />
+                            <summary>{{ post.content }}</summary> <br />
+                            <div id = "icons_and_read_more">
+                                <div id = "share"></div>
+                                <div id = "comments"></div> {{ post.comments }}
+                                <div id = "likes"></div> {{ post.likes }}
+                                <a href = "{% url 'blog:post' post.convert_title %}"><button id = "read_more">read more</button></a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+                </div>
+            
+            {% else %}
+                There are no posts yet.
+            {% endif %}
+            </div>
+        </div>
+    </body>
+</html>

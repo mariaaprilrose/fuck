@@ -1,0 +1,53 @@
+Note:
+ - remove database and user static files after project deadline
+
+Country codes based on countries.js of Shafiul Azam at http://bdhacker.wordpress.com/2009/11/21/adding-dropdown-country-state-list-dynamically-into-your-html-form-by-javascript/
+
+UNNECESSARY FOLDERS AND FILES (can be regenerated, unnecessary to the site [for viewing purposes only], etc.; excluding files and folders from .gitignore)
+    - database.db
+    - static/img/others
+    - static/img/users
+    - static/videos
+    - static/messages/contact
+
+SETUP:
+    - run 'source /usr/local/bin/virtualenvwrapper.sh'
+    - run 'mkvirtualenv tunewhale'
+    - run 'pip install django==1.5.5'
+    - run 'pip install south'
+    - run 'pip install Pillow'
+    - run 'git clone git@git.assembla.com:tunewhale-com.3.git tunewhale'
+    - run 'cd tunewhale'
+    - run 'python bootstrap.py'
+    - run 'bin/buildout'
+    - in src/tunewhale/tunewhale/settings.py, add static location to STATICFILES_DIRS; right-click storage/static folder, copy path, and save to STATICFILES_DIRS
+    - in src/tunewhale/tunewhale/settings.py, add template location to TEMPLATE_DIRS; right click src/tunewhale/templates, copy path, and save to TEMPLATE_DIRS
+    - in src/tunewhale/tunewhale/settings.py, comment out 'south' in INSTALLED_APPS, uncomment south for changes in the models
+    - run 'bin/manage syncdb', specify an admin account (or not, depends on you), the admin account is only for the admin interface, therefore cannot be used while in the site itself
+    - run 'bin/manage runserver'
+    - in browser open 'localhost:8000'
+
+NOTES:
+    - unless the superuser has a UserProfile, the user cannot view the site.
+    - contact messages is in a file in 'storage/static/messages/contact/', it is saved under today's date. If the file does not exist, the file is created. Each contact message entry is saved in the format 'ISO Time format, name, phone, email, message'. Each entry is separated by one blank line.
+    - login and logout redirect to the page where the function is accessed, there is a '?next={{ request.path }}' after the links to the functions. To change redirection page, simply specify a new path in '?next=' using one of the urls specified in the many urls.py, e.g. ?next={% url 'auth:login' %}
+    - there is a problem in the referring of pages, the codes cannot redirect when 'next' is undefined, even if the url contains '?next=' in it
+    - right now, the changing of statuses (baby whale, tune whale, killer whale) is manual and must be done in the shell (run 'bin/manage shell')
+    - there are currently no user permissions; no way to distinguish the difference between users except for their status
+    - 'tournament feed' and 'blow hole' in the user profile can only be viewed by the owner of the profile
+    - the avatar and covers are saved in the path 'storage/static/img/users/username/'. They are saved as 'avatar.fileformat' and 'cover.fileformat'. If the file already exists, a new file will be specified as 'avatar_1.fileformat', ideally the current image should be deleted and replaced by the new image.
+    - if the certain profile fields are empty, they are not displayed. The music interests, music genres, best song ever, bio, followers will not be displayed if the fields are empty.
+    - the video playlist in home work. Just replace the hrefs and image posters
+    - passwords have to be 7 characters long
+    - consider replacing the user upload paths; instead of saving pictures under username folders, distinguish each user through id_generator() [in blogs.models] and save under a folder named after the generated string.
+    - having a blog title with special characters hinders redirection
+    - as of now, each title has to be unique
+
+TO BE IMPLEMENTED:
+    - tournaments
+    - profile followers' back and next buttons
+    - merchandise popups
+    - notifications: views, comments and messages
+    - search
+    - commenting
+    - messaging
